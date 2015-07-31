@@ -1,0 +1,42 @@
+@import url(bootstrap.min.css);
+@import url(bootstrap-theme.min.css);
+@import url(fonts.css);
+
+body {
+    font-family: 'LinuxLibertine';
+    font-size: 16px;
+}
+
+h1, h2, h3 {
+    font-family: 'LinBiolinum';
+    color: #ff4f00;
+}
+
+a {
+    color: #ff4f00;
+}
+
+a:hover {
+    color: #333;
+}
+
+/* parsed from md, have to get creative with the css */
+#james-pryor,
+#james-pryor + p,
+#achievements,
+#achievements + ul {
+    clear: left;
+    float: left;
+    width: 50%;
+}
+
+#experience-and-skills + ul + p {
+    clear: both;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

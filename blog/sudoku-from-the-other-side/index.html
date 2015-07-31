@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>A Blog by James</title>
+    <link rel="stylesheet" type="text/css" href="../../styles/main.css">
+    <link rel="stylesheet" type="text/css" href="../../styles/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <script src="../../scripts/jquery-2.1.4.min.js"></script>
+    <script src="../../scripts/jquery-jqcloud.js"></script>
+    <script src="../../scripts/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <ul class="nav navbar-nav navbar-toggle collapsed pull-right" aria-expanded="false">
+                <li><a class="ion-link" href="http://geekwagon.net"></a><li>
+            </ul>
+            <h1><a href="../../">A Blog by James</a></h1>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav pull-right" id="contact">
+                <li>
+                    <a class="ion-ios-email-outline" title="Email is one of the best ways to contact me." href="mailto:james@geekwagon.net"></a>
+                </li>
+                <li>
+                    <a class="ion-social-facebook-outline" href="https://www.facebook.com/deplicator"></a>
+                </li>
+                <li>
+                    <a
+                        class="ion-social-github-outline"
+                        title="I don't always put Facebook before GitHub, but when I do it's because they're in alphabetical order."
+                        href="https://github.com/deplicator">
+                    </a>
+                </li>
+                <li>
+                    <a class="ion-social-googleplus-outline" href="https://plus.google.com/100479632575151546186?rel=author"></a>
+                </li>
+                <li>
+                    <a class="ion-social-linkedin-outline" href="https://www.linkedin.com/in/pryorjames">
+                    </a>
+                </li>
+                <li>
+                    <a class="ion-link" href="http://geekwagon.net"></a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+        <a href="../../"><span class="glyphicon glyphicon-circle-arrow-left"></span>back</a>
+        <a href="#disqus_thread"><span class="glyphicon glyphicon-comment"></span>comments</a>
+        <h2>Sudoku from the Other Side</h2>
+        <div>Tuesday, April 14, 2015</div>
+            <p><img src="../../images/IMG_20150424_140251.jpg" alt="Real Sudoku Game" title="I play in pen because I&#39;m a glutton for punishment."></p>
+<p>I do love Sudoku, and I play it too much. Not long ago (before this semester
+started kicking my butt) there were two things I wanted to play with: Local
+Storage and a Sudoku library.</p>
+<p><a href="http://geekwagon.net/projects/sudoku/">This is what I came up with</a>.</p>
+<!-- more -->
+<p>I didn&#39;t use a library for local storage, for some reason I wanted to do it the
+hard way. This project has only been tested in Chrome, so if you want to see the
+mess I put in local storage the developer tools (F12) has a tab named Resources.</p>
+<p>I&#39;d love to write my own Sudoku creating/solving/playing library (maybe
+someday), but for now I&#39;m playing with <a href="https://github.com/einaregilsson/sudoku.js">this one made by Einar Egilsson</a>,
+which is a port of one created in Python by Peter Norvig. It was easy to use,
+and it&#39;s been a few months but I want to say I made some minor modifications.
+Should have written what.</p>
+<p>There are some simple options. The highlighting presented an interesting jQuery
+technical challenge I hadn&#39;t encountered. Over all this is just clean fun. Quite
+a bit of functionality doesn&#39;t work yet (sorry), but I hope to get back to this
+project sometime. Unfortunately it is one of millions of projects I start and
+never finish.</p>
+
+
+
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+            var disqus_shortname = 'geekwagon';
+            var disqus_identifier = 'blog/sudoku-from-the-other-side';
+            var disqus_title = 'blog/sudoku-from-the-other-side';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+    </div>
+</body>
+</html>
