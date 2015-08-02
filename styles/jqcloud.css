@@ -25,7 +25,7 @@ div.jqcloud {
 
 div.jqcloud a {
   font-size: inherit;
-  text-decoration: none;
+
 }
 
 div.jqcloud span.w10 { font-size: 550%; }
@@ -40,6 +40,5 @@ div.jqcloud span.w2 { font-size: 150%; }
 div.jqcloud span.w1 { font-size: 100%; }
 
 /* colors */
-div.jqcloud { color: #007FE5; }
+div.jqcloud { color: #F9690E; }
 div.jqcloud a { color: inherit; }
-div.jqcloud a:hover { color: #0df; }
