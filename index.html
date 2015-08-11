@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>A Blog by James</title>
-    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/jqcloud.css">
     <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/ionicons.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/main.css">
     <script src="http://deplicator.github.io/scripts/analytics.js"></script>
     <script src="http://deplicator.github.io/scripts/jquery-2.1.4.min.js"></script>
     <script src="http://deplicator.github.io/scripts/jquery-jqcloud.js"></script>
@@ -133,6 +135,25 @@ Storage and a Sudoku library.</p>
                     <div class="tags"><span class="glyphicon glyphicon-tags"></span> <span class="tag"><a href="topics/games.html">games</a></span><span class="tag"><a href="topics/project.html">project</a></span><span class="tag"><a href="topics/sudoku.html">sudoku</a></span><span class="tag"><a href="topics/web.html">web</a></span></div>
                 </div>
             </article>
+            <article>
+                <h2>
+                    <a href="blog/unscientific-soylent-test/index.html">Unscientific Soylent Test</a>
+                </h2>
+                    <div><p><img src="images/IMG_0762-Version-2.jpg" alt="Powdered Food" title="I&#39;m not a fan of the name, but I cannot knock them on professional packaging."></p>
+<p>Over spring break I decided to give Soylent a try. If you haven&#39;t heard of it <a href="http://lmgtfy.com/?q=soylent">check out this link
+to learn more</a>. My original plan was to give it a solid scientific method-ing (could I be
+the first person to use &quot;scientific method&quot; as a verb?), but either because I&#39;m busy, lazy, or a
+realist I opted for a simple approach.</p></div>
+                    <div class="pull-right read-more"><a href="blog/unscientific-soylent-test/index.html">read more...</a></div>
+                <div class="article-footer">
+                    <div class="date"><span class="glyphicon glyphicon-calendar"></span> Satruday, March 21, 2015</div>
+                    <div class="comment">
+                        <span class="glyphicon glyphicon-comment"></span>
+                        <a href="blog/unscientific-soylent-test/index.html#disqus_thread" data-disqus-identifier="blog/unscientific-soylent-test">comments</a>
+                    </div>
+                    <div class="tags"><span class="glyphicon glyphicon-tags"></span> <span class="tag"><a href="topics/experiment.html">experiment</a></span><span class="tag"><a href="topics/health.html">health</a></span><span class="tag"><a href="topics/soylent.html">soylent</a></span></div>
+                </div>
+            </article>
         </div>
 
         <div class="hidden-xs col-sm-4">
@@ -146,14 +167,29 @@ Storage and a Sudoku library.</p>
                         <li><a href="blog/tax-sliding/index.html">Tax Sliding</a></li>
                         <li><a href="blog/how-i-work/index.html">How I Work</a></li>
                         <li><a href="blog/sudoku-from-the-other-side/index.html">Sudoku from the Other Side</a></li>
+                        <li><a href="blog/unscientific-soylent-test/index.html">Unscientific Soylent Test</a></li>
                     </ul>
                 </li>
             </ul>
             
             <script>
-                temp = '[{"text": "about me", "weight": 1, "link": "topics/about-me.html"}, {"text": "tutorial", "weight": 1, "link": "topics/tutorial.html"}, {"text": "web", "weight": 3, "link": "topics/web.html"}, {"text": "complaints", "weight": 1, "link": "topics/complaints.html"}, {"text": "microsoft", "weight": 1, "link": "topics/microsoft.html"}, {"text": "windows", "weight": 1, "link": "topics/windows.html"}, {"text": "edge", "weight": 1, "link": "topics/edge.html"}, {"text": "games", "weight": 1, "link": "topics/games.html"}, {"text": "project", "weight": 2, "link": "topics/project.html"}, {"text": "sudoku", "weight": 1, "link": "topics/sudoku.html"}, {"text": "finance", "weight": 1, "link": "topics/finance.html"}, {"text": "taxes", "weight": 1, "link": "topics/taxes.html"}]';
+                temp = '[{"text": "about me", "weight": 1, "link": "topics/about-me.html"}, {"text": "tutorial", "weight": 1, "link": "topics/tutorial.html"}, {"text": "web", "weight": 3, "link": "topics/web.html"}, {"text": "games", "weight": 1, "link": "topics/games.html"}, {"text": "project", "weight": 2, "link": "topics/project.html"}, {"text": "sudoku", "weight": 1, "link": "topics/sudoku.html"}, {"text": "complaints", "weight": 1, "link": "topics/complaints.html"}, {"text": "microsoft", "weight": 1, "link": "topics/microsoft.html"}, {"text": "windows", "weight": 1, "link": "topics/windows.html"}, {"text": "edge", "weight": 1, "link": "topics/edge.html"}, {"text": "finance", "weight": 1, "link": "topics/finance.html"}, {"text": "taxes", "weight": 1, "link": "topics/taxes.html"}, {"text": "experiment", "weight": 1, "link": "topics/experiment.html"}, {"text": "health", "weight": 1, "link": "topics/health.html"}, {"text": "soylent", "weight": 1, "link": "topics/soylent.html"}]';
                 $('.tagcloud').jQCloud(JSON.parse(temp))
             </script>
+        </div>
+    </div>
+
+    <!-- Enlarged Image Modal -->
+    <div class="modal fade" id="large-image-modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -169,5 +205,6 @@ Storage and a Sudoku library.</p>
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
         }());
     </script>
+    <script src="http://deplicator.github.io/scripts/main.js"></script>
 </body>
 </html>
