@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>A Blog by James</title>
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/ionicons.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/main.css">
+    <script src="http://deplicator.github.io/scripts/analytics.js"></script>
+    <script src="http://deplicator.github.io/scripts/jquery-2.1.4.min.js"></script>
+    <script src="http://deplicator.github.io/scripts/jquery-jqcloud.js"></script>
+    <script src="http://deplicator.github.io/scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <ul class="nav navbar-nav navbar-toggle collapsed pull-right" aria-expanded="false">
+                    <li><a class="ion-link" href="http://geekwagon.net"></a><li>
+                </ul>
+                <h1><a href="http://deplicator.github.io">A Blog by James</a></h1>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav pull-right" id="contact">
+                    <li>
+                        <a class="ion-ios-email-outline" title="Email is one of the best ways to contact me." href="mailto:james@geekwagon.net"></a>
+                    </li>
+                    <li>
+                        <a class="ion-social-facebook-outline" href="https://www.facebook.com/deplicator"></a>
+                    </li>
+                    <li>
+                        <a
+                            class="ion-social-github-outline"
+                            title="I don't always put Facebook before GitHub, but when I do it's because they're in alphabetical order."
+                            href="https://github.com/deplicator">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ion-social-googleplus-outline" href="https://plus.google.com/100479632575151546186?rel=author"></a>
+                    </li>
+                    <li>
+                        <a class="ion-social-linkedin-outline" href="https://www.linkedin.com/in/pryorjames">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ion-link" href="http://geekwagon.net"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+            <article>
+                <a href="../../"><span class="glyphicon glyphicon-circle-arrow-left"></span>back</a>
+                <a href="#disqus_thread"><span class="glyphicon glyphicon-comment"></span>comments</a>
+                <h2>Some Backup Scripts</h2>
+                <div>Thursday, January 30, 2015</div>
+                <div><p>I&#39;ve been updating my backup procedure for Windows and learned some new tricks to share. My current
+backup procedure is the most horrible thing I could imagine. It copies and compresses all the files
+I care about and stores them on a NAS. It ignores some critical backup components:</p>
+<ul>
+<li><strong>Waste space</strong>, no incremental just a full copy of everything. This takes up a lot of space.</li>
+<li><strong>No daily archive</strong>. What if I want to recover a file I deleted 17 days ago from a networked
+directory? As of right now it cannot be done.</li>
+<li><strong>Compression sucks</strong>, for three reasons.<ul>
+<li><em>First</em>, it takes longer to do the backup.</li>
+<li><em>Second</em>, it is harder to search through.</li>
+<li><em>Third</em>, if the single massive zip file is corrupt the backup is useless.</li>
+</ul>
+</li>
+</ul>
+<p>These are some serious issues I should deal with in my new solution. In addition to that I don&#39;t
+want to give up the power, flexibility, and--let&#39;s just go with--geek pride a scripted solution
+provides. Geek pride could be replaced with frugal, but to be honest some of this stuff is a little
+fun to figure out. Saving a dollar is a by product more than a motivator.</p>
+<!-- more -->
+<hr>
+<h3 id="quick-overview">Quick Overview</h3>
+<p>When this is done there will be a script that runs from the computer with a source folder I want to
+back up. Every day it will copy all files that changed in the last 24 hours from the source folder
+to a network location. Once a month it will copy all files. Each backup, daily and monthly, will be
+placed in a folder named with that days date so they do not over write every day.</p>
+<h3 id="windows-scripted-backup">Windows Scripted Backup</h3>
+<p>I am a simple guy with simple needs. The tools used here are:</p>
+<ul>
+<li>Robocopy (Included with Windows or a free download)</li>
+<li>A text editor (I recommend <a href="https://notepad-plus-plus.org/">Notepad++</a> for Windows users, but go with what you know)</li>
+<li>Scheduled Tasks (built into Windows)</li>
+</ul>
+<h4 id="robocopy">Robocopy</h4>
+<p><em>This step is optional for Windows Vista and 7 users, but worth checking out. Not sure about
+8--sorry can&#39;t bring myself to care about Windows 8.</em></p>
+<p>Windows Vista, 7 and Server 2008 come with robocopy. If you are using XP you can download robocopy
+from may places on the web, but I trust Microsoft (believe it or not) to put out a worry free copy.
+The only catch is that it is part of their <a href="http://www.microsoft.com/en-us/download/details.aspx?id=17657">Windows Server 2003 Resource Kit Tools</a>.
+Robocopy is burred in the executable that comes from that package. I recommend installing it,
+finding the robocopy.exe, and copying it some place useful.</p>
+<p>Call me old fashion, but even though I use Windows 7 I make a copy (not move) robocopy.exe to the
+same folder the scripts are in. The easiest way to find the robocopy executable is to search for it.
+I found mine in <code>C:\Windows\System32\robocopy.exe</code>, and copied it to <code>C:\scripts</code>.</p>
+<h4 id="a-text-editor">A Text Editor</h4>
+<p>In a pinch notepad is fine for this task, but if you&#39;ve never used <a href="https://notepad-plus-plus.org/">Notepad++</a> you are in
+for a treat. To create a batch file I generally just start in Windows Explorer. Navigate to my
+scripts folder, <code>C:\scripts</code>; then right click on the screen and make a new text document. You will
+need to have <a href="http://windows.microsoft.com/en-US/windows-vista/Show-or-hide-file-name-extensions">&quot;Hide extensions for known file types&quot; unchecked</a> in folder options so you can
+rename it from <code>New Text Document.txt</code> to <code>awesomebackupscript.bat</code>. You don&#39;t have to name it that,
+but the <code>.bat</code> part is required.</p>
+<p>Here is a quick example of the script I used. It will be explained line by line.</p>
+<pre><code>net use z: /delete
+net use z: \\NAS\backup /user:admin password
+robocopy &quot;E:\myfiles&quot; &quot;z:\%Date:~-4,4%-%Date:~-10,2%-%Date:~-7,2%(day)\myfiles&quot; /ZB /S /R:2 /MAXAGE:1 /LOG+:z:\logs\%Date:~-4,4%-%Date:~-10,2%-%Date:~-7,2%_mycomputer(day).txt /TS_
+</code></pre><p>The first two lines remove the mapped network drive taking up letter &#39;z&#39;, and adds the network
+location used for back up. These two lines are precautionary, and the script will work without them.
+It is nice to know you are using the drive you intended to use. In my case the NAS required
+different credentials which is why I chose to do it this way.</p>
+<p>The robocopy line is all the magic. There is a nice <a href="http://ss64.com/nt/robocopy.html">technical manual for robocopy</a>. For the
+purposes of a simple daily backup you will only be interested in the following.</p>
+<pre><code>robocopy [source] [destination]
+</code></pre><p>At it&#39;s core that&#39;s all that is going on in line 3.</p>
+<p>The source and destination need to be in double quotation marks if the file path has a space in it.
+For example <code>&quot;C:\Program Files&quot;</code>. They can be used on paths without spaces too (like the example),
+I&#39;ve found it to be good practice in Windows.</p>
+<p>The source path is strait forward in the example, I&#39;m backing up everything on E: in a folder called
+myfiles. The destination, on the other hand, is not so simple. In part this is the motivation for
+this post. It&#39;s daunting to look at but here it is:</p>
+<pre><code>&quot;z:\%Date:-4,4%-%Date:~-10,2%-%Date:~7,2%(day)\myfiles&quot;
+</code></pre><p>An example out put would be <code>z:\2013-02-26(day)\myfiles</code>. That&#39;s understandable, a folder on drive
+Z named 2013-02-26(day) with a sub-folder that is a copy of the files from my source. I&#39;ll save my
+argument about why I am an American who uses year-month-day for another post, but what it important
+is that when this script is run it creates a new folder based on the date. The (day) part is because
+I have another script that runs using the date and it is differentiated by naming it
+<code>2013-02-26(full)</code>.</p>
+<p>Everything else on line 3 are options. Strait from the documentation:</p>
+<pre><code>/Z : Copy files in restartable mode (survive network glitch).
+/B : Copy files in Backup mode.
+/S : Copy Subfolders.
+
+/R:n : Number of Retries on failed copies - default is 1 million.
+/MAXAGE:n : MAXimum file AGE - exclude files older than n days/date.
+
+/LOG:file : Output status to LOG file (overwrite existing log).
+/TS : Include Source file Time Stamps in the output.
+</code></pre><p>The log file is saved the same way the date is in the destination folder. Maxage is what grabs only
+the files that have changed in the past day.</p>
+<p>There is a Scheduled Tasks to run this file daily. Then once a month I run a similar script with no
+MAXAGE option to do a complete backup. I also have a task that deletes backup folders older than 90
+days to keep the size reasonable. This gives me an option to restore a file that has changed in the
+last 90 days.</p>
+<p><em>I am posting this almost two years after I wrote this back up solution. Since this I&#39;ve come up
+with an even better way. Maybe I&#39;ll write it up before another two years pass.</em></p>
+</div>
+            </article>
+            <div id="disqus_thread"></div>
+        </div>
+
+        <!-- Enlarged Image Modal -->
+        <div class="modal fade" id="large-image-modal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+            var disqus_shortname = 'geekwagon';
+            var disqus_identifier = 'blog/some-backup-scripts';
+            var disqus_title = 'blog/some-backup-scripts';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>
+            Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+        </noscript>
+        <script src="http://deplicator.github.io/scripts/main.js"></script>
+    </div>
+</body>
+</html>

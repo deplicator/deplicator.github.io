@@ -59,29 +59,59 @@
             <article>
                 <a href="../../"><span class="glyphicon glyphicon-circle-arrow-left"></span>back</a>
                 <a href="#disqus_thread"><span class="glyphicon glyphicon-comment"></span>comments</a>
-                <h2>Tax Sliding</h2>
-                <div>Satruday, July 26, 2015</div>
-                <div><p>Today we&#39;re going to <del>complain</del> talk about taxes! Exciting, I know. So exciting
-<a href="http://deplicator.github.io/tax-slider/">I made a thing for it</a>.</p>
-<p><em>August 11, 2015 edit: Now with a graph!</em></p>
+                <h2>A Real Ajax Login System</h2>
+                <div>Thursday, December 12, 2014</div>
+                <div><p><img src="http://deplicator.github.io/images/ajaxlogin.jpg" alt="Real Ajax Login" title="Dashed borders let you know this is hard core web design."></p>
+<p>To long; don&#39;t care: <a href="http://geekwagon.net/projects/real-ajax-login/login.html">Demo</a> | <a href="https://github.com/deplicator/real-ajax-login">Source</a></p>
+<p>After a bit of Google searching, I could not find the login system I want. I would say &#39;fit my
+needs&#39;, but that&#39;s not accurate. There were tons that could fit the need, but I want a back end php
+system that allows a user to login by way of ajax calls. Specifically one that didn&#39;t require all my
+file names to end in .php. Is that necessary? No. Is that being picky? Probably. Is it fun to make
+it work anyway? Of course.</p>
+<p>There are plenty of php ajax style login systems and examples out there. I started with <a href="http://www.9lessons.info/2014/07/ajax-php-login-page.html">this one
+from 9lessons</a>.</p>
+<p>I have no right to complain about other people&#39;s work, but wow this code is hard to read and
+inconsistent. It works though, so I chose to clean it up and start making changes.</p>
+<p><strong>DISCLAIMER:</strong> I would like to note I am not a security expert. While I feel this system is decent
+enough, I cannot advise using it in a real application environment.</p>
+<p><a href="http://geekwagon.net/projects/real-ajax-login/login.html">Here is a demo</a>, note all pages end in html. You can log in with demouser and password, but
+check out the registration. That&#39;s where most of the magic is.</p>
 <!-- more -->
 <hr>
-<p>I&#39;ve done my own taxes every year since 1998 except for 2010, it&#39;s fun to me. Follow the
-instructions line by line, plug in numbers, do calculations--it&#39;s like a program written by the IRS
-and I get to execute it. I understand most people don&#39;t like it. Taxes are complex and I&#39;m all for
-a comprehensive and simplified tax reform. Every year I learn nuances and find the rabbit hole
-continues to grow.</p>
-<p>As on older college student, I&#39;m around people who are new to income tax. They have two common misconceptions I try to explain.</p>
-<p>First, the percent you pay doesn&#39;t apply to all taxable income the same. If you make a few extra
-dollars and move into the 25% tax bracket, you don&#39;t pay 25% on all of it. This is a difficult
-concept to explain before 20 a year old loses interest--hence <a href="http://deplicator.github.io/tax-slider/">the program</a>.</p>
-<p>Second is the argument for a flat tax rate. I get it, the idea sounds fair--I&#39;m all for fair too,
-but what would that rate have to be? Someone has done their homework and figured it out (not me).
-I&#39;m not here to debate if it is good or bad, I only want to point out as you earn more you get to
-pay more in either scenario. You&#39;ll notice on the tax slider page there is an effective tax rate
-that will always grow as you pay more. As someone who&#39;s stayed in the lower end all his life, I&#39;m
-okay with paying more when I have more and keeping more when I have less.</p>
-<p>I found it interesting how the tax percentages did not scale evenly. For example you pay 10% on the first $9,225, and 35% on a measly $1,699 when you are nearly at half a million. Seems like this could be excluded all together, making 6 tax brackets instead of the 7.</p>
+<p>The demo stored passwords as an MD5 hash--at least it&#39;s not plain text, but I thought it would be
+worth while to change this to use PHP&#39;s <code>password_hash</code> and <code>password_verify</code> functions. This
+effectively made the minimum PHP version requirement 5.5.0, which wasn&#39;t a problem at home, but for
+the demo I had to include <a href="https://github.com/Antnee/phpPasswordHashingLib">this library</a> to make it work with 5.4.0 (Dreamhost!).</p>
+<p>I also changed the database connector to PDO instead of mysqli. This way it can be used with any
+database (changeable in the config.php file). This has the advantage of not be vulnerable to sql
+injection.</p>
+<p>The biggest reason for the security disclaimer above is I am not sure of the security risks posed
+with passing php session data to the browser. When a user logs in, the session is created from
+php/login.php. This requires sending an HTTP post, which contains the user&#39;s entered password. There
+is probably a better way, but this works for now. If the username is found and the password is
+verified, the record for that user (except for the password hash) is sent back to the browser as a
+JSON object. In the demo you can see this in the console after logging in.</p>
+<p>I recently finished a database course, so in many ways I&#39;d like to use some real data constraints.
+I find theory and practice don&#39;t align well here. I maintain the username uniqueness by simply not
+allowing a user to register with a name that already exist. I came up with a real time validation on
+the registration page. As a user types, if the value matches a username in the database the
+registration button doesn&#39;t enable.</p>
+<p>I know what you are thinking.</p>
+<p>James ...<br>You&#39;re making it easy for the hackers to find out all your usernames!</p>
+<p>Yes that is true, but my response is &quot;who cares?&quot; Really, why should user names be private?</p>
+<p>There is a balance to be had between security and user friendly.</p>
+<p>Most website will not tell a user which is wrong between the username or password on a failed login
+attempt. The idea is a hacker won&#39;t know know if the username is valid. BUT anyone can find out if a
+username is there simply by trying to register that name. Now they know all their hackory is not
+wasted on an invalid username.</p>
+<p>Security should come from within the system. If a user fails to log in after so many attempts, red
+flags should be raised. A brute force attack can be thwarted with a 5 second lock out between
+attempts. Doesn&#39;t sound like much but when you have the hardware to brute force a billion passwords
+per minute and then limit it to 12 per minute... those guys will go somewhere else. A normal user
+will not even notice. That being said, there is no timer lock out on failed attempts in this demo
+(yet).</p>
+<p>That&#39;s my two cents on security.</p>
+<p>I plan to add more to this in the future. Feedback is appreciated, as always. :)</p>
 </div>
             </article>
             <div id="disqus_thread"></div>
@@ -107,8 +137,8 @@ okay with paying more when I have more and keeping more when I have less.</p>
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES * * */
             var disqus_shortname = 'geekwagon';
-            var disqus_identifier = 'blog/tax-sliding';
-            var disqus_title = 'blog/tax-sliding';
+            var disqus_identifier = 'blog/a-real-ajax-login-system';
+            var disqus_title = 'blog/a-real-ajax-login-system';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
