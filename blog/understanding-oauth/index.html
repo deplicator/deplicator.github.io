@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>A Blog by James</title>
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/ionicons.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/main.css">
+    <script src="http://deplicator.github.io/scripts/analytics.js"></script>
+    <script src="http://deplicator.github.io/scripts/jquery-2.1.4.min.js"></script>
+    <script src="http://deplicator.github.io/scripts/jquery-jqcloud.js"></script>
+    <script src="http://deplicator.github.io/scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <ul class="nav navbar-nav navbar-toggle collapsed pull-right" aria-expanded="false">
+                    <li><a class="ion-link" href="http://geekwagon.net"></a><li>
+                </ul>
+                <h1><a href="http://deplicator.github.io">A Blog by James</a></h1>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav pull-right" id="contact">
+                    <li>
+                        <a class="ion-ios-email-outline" title="Email is one of the best ways to contact me." href="mailto:james@geekwagon.net"></a>
+                    </li>
+                    <li>
+                        <a class="ion-social-facebook-outline" href="https://www.facebook.com/deplicator"></a>
+                    </li>
+                    <li>
+                        <a
+                            class="ion-social-github-outline"
+                            title="I don't always put Facebook before GitHub, but when I do it's because they're in alphabetical order."
+                            href="https://github.com/deplicator">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ion-social-googleplus-outline" href="https://plus.google.com/100479632575151546186?rel=author"></a>
+                    </li>
+                    <li>
+                        <a class="ion-social-linkedin-outline" href="https://www.linkedin.com/in/pryorjames">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ion-link" href="http://geekwagon.net"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+            <article>
+                <a href="../../"><span class="glyphicon glyphicon-circle-arrow-left"></span>back</a>
+                <a href="#disqus_thread"><span class="glyphicon glyphicon-comment"></span>comments</a>
+                <h2>Understanding OAuth</h2>
+                <div>Tuesday, September 1, 2015</div>
+                <div><p><img src="http://deplicator.github.io/images/IMG_20150829_122938.jpg" alt="Totally took a picture of the screen with my phone--trendy." title="OAuth can be daunting"></p>
+<p>Playing with Github&#39;s API without authorization has a limit of 50 calls per hour. I hit this limit
+faster than expected. It is time to learn how <a href="https://en.wikipedia.org/wiki/OAuth">OAuth</a> works.</p>
+<p><a href="http://geekwagon.net/projects/github-oauth-demo/">Here is the demo I made to help me get it</a>. This is not the best demo, but it works. Anyone
+with more knowledge in this area please leave feedback in the comments. I&#39;m all for making this
+better.</p>
+<h3 id="step-1-make-stuff-up">Step 1 - Make Stuff Up</h3>
+<p>For this demo I&#39;m using Github, but OAuth should be the same anywhere.</p>
+<!-- more -->
+<p>The first thing to make up is an application on out Github account. I would post a direct link, but
+it seems it has changed recently. Here are the current steps to find it after logging into Github.</p>
+<p><code>Github Settings -&gt; Applications -&gt; Developer applications tab -&gt; Register new applcaion</code></p>
+<p>Setting up the application is strait forward. The most important part here is <strong>Authorization
+callback URL</strong>, be sure it&#39;s a url you have access to. I found you can set it to a url that&#39;s only
+accessible from my local network (in my case <a href="http://homeserver/sandbox/">http://homeserver/sandbox/</a>). I did not try this with an
+IP address. After creating an application, take note of the Client ID and Client Secret. These will
+be needed later.</p>
+<p><a href="https://developer.github.com/v3/oauth/">Github&#39;s documentation</a> is decent, but with all OAuth docs I feel as if some basic premise
+eludes me. The ultimate goal of this demo is to figure out what I&#39;m missing. I hope it helps other
+people fill in gaps too.</p>
+<p>The second thing to make up is a <strong>state</strong>. The state is a random string that would not be
+reproducible by someone else (or even you). The demo uses PHP, and to create the state sting I used
+this:</p>
+<p><code>$_SESSION[&quot;state&quot;] = hash(&quot;sha256&quot;, microtime(TRUE).rand().$_SERVER[&quot;REMOTE_ADDR&quot;]);</code></p>
+<p>This was lifted from an <a href="https://gist.github.com/aaronpk/3612742">old Gist by aaronpk</a> I found while searching for how to OAuth. I
+referred to this gist several times, but this is the only part left untouched because it works. Make
+note we&#39;ve stored this random number in a <a href="http://php.net/manual/en/session.examples.basic.php">PHP Session</a>.</p>
+<p>Now that we have a client ID and a state, we can move on to the next step.</p>
+<h3 id="step-2-build-an-authorization-url">Step 2 - Build an Authorization URL</h3>
+<p>There are a lot of ways to do this, but I chose to kludge it with some simple string concatenation.</p>
+<p><code>https://github.com/login/oauth/authorize?client_id=&lt;?php echo CLIENT_ID; ?&gt;&amp;state=&lt;?php echo $_SESSION[&quot;state&quot;]; ?&gt;</code></p>
+<p>Going to this url might look familiar if you&#39;ve ever signed into a website using Github credentials.
+It&#39;s purpose is to show the user what permissions the application is requesting. In the demo we&#39;re
+only requesting read access to public information. The API can do anything on behalf of the user;
+including write to a repository, change user information, even delete things.</p>
+<p>Users can opt out, or if they accept they will be redirected back to your application using the
+Authorization callback URL (remember it was important).</p>
+<h3 id="step-3-callback-url">Step 3 - Callback URL</h3>
+<p>Along with being redirected via the callback URL, there are some URL parameters that come with it.
+The two important ones are <code>state</code> and <code>code</code>.</p>
+<p>State is the same as before, it should match the state saved in the PHP Session from Step 1. If it
+does not, something funky is going on and you should not continue. This can be checked with a simple
+if statement.</p>
+<p><code>if($_GET[&quot;state&quot;] == $_SESSION[&quot;state&quot;])</code></p>
+<p>If they match we&#39;ll use the code parameter to get an access token. <em>The access token is the ultimate
+goal of the OAuth process.</em></p>
+<p>In the demo we pause here to see the code and check the state. The process will not continue until
+the Exchange button is clicked. In reality, this will happen automatically behind the scenes.</p>
+<h3 id="step-3-_and-a-half_-the-exchange">Step 3 <em>and a half</em> - The Exchange</h3>
+<p>This is separate, but still part of step 3. With our state&#39;s matching the code can be exchanged for
+an access token by making a POST request to <code>https://github.com/login/oauth/access_token</code>. There are
+three parameters to send with this request; <code>client_id</code>, <code>client_secret</code>, and <code>code</code>. Putting them
+in an array makes it neat and easy.</p>
+<pre><code>    $params = array(
+        &quot;client_id&quot; =&gt; CLIENT_ID,
+        &quot;client_secret&quot; =&gt; CLIENT_SECRET,
+        &quot;code&quot; =&gt; $_SESSION[&quot;code&quot;]
+    );
+</code></pre><p>Note that CLIENT_ID and CLIENT_SECRET are constants defined earlier in the PHP file.</p>
+<p>The most common way to make REST call in PHP is with <a href="https://en.wikipedia.org/wiki/CURL">cURL</a> (also the only way I&#39;ve ever
+seen it done). Fun fact about cURL: it is a recursive acronym &quot;Curl URL Request Library&quot;. Here is
+the bare minimum needed for a cURL POST to Github&#39;s API.</p>
+<pre><code>    $ch = curl_init(&quot;https://github.com/login/oauth/access_token&quot;);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(&quot;Accept: application/json&quot;));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+
+    // Returned information on sucess.
+    $response = json_decode(curl_exec($ch));
+</code></pre><p>Now <code>$response</code> holds an object with some key value pairs, but the only one we care about is
+access_token. It can be saved to the PHP session.</p>
+<p><code>$_SESSION[&quot;access_token&quot;] =$response-&gt;access_token;</code></p>
+<h3 id="step-4-now-have-fun">Step 4 - Now Have Fun</h3>
+<p>With an access token we can make subsequent API calls with cURL to get info about the user, their
+repositories, their activity, or anything the Github API allows. Here is an example of a simple
+API call to get public user information.</p>
+<pre><code>    $ch = curl_init(&quot;https://api.github.com/user?access_token=&quot; . $_SESSION[&quot;access_token&quot;]);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_USERAGENT, &quot;github-oauth-demo&quot;);
+    $response = json_decode(curl_exec($ch));
+</code></pre><p>The <code>CURLOPT_USERAGENT</code> is required when using an access_token. You can also get fancy and put the
+<a href="https://developer.github.com/v3/oauth/#use-the-access-token-to-access-the-api">access token in the header</a>. This time <code>$response</code> is an object that holds user information. The demo
+will output this object and you&#39;ll be able to see there are more url&#39;s available to get interesting
+information. You could, for example, make a call to <code>api.github.com/user</code> to get the value for the
+key <code>repos_url</code>, then use that url to list the users repositories.</p>
+</div>
+            </article>
+            <div id="disqus_thread"></div>
+        </div>
+
+        <!-- Enlarged Image Modal -->
+        <div class="modal fade" id="large-image-modal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+            var disqus_shortname = 'geekwagon';
+            var disqus_identifier = 'blog/understanding-oauth';
+            var disqus_title = 'blog/understanding-oauth';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>
+            Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+        </noscript>
+        <script src="http://deplicator.github.io/scripts/main.js"></script>
+    </div>
+</body>
+</html>

@@ -59,29 +59,43 @@
             <article>
                 <a href="../../"><span class="glyphicon glyphicon-circle-arrow-left"></span>back</a>
                 <a href="#disqus_thread"><span class="glyphicon glyphicon-comment"></span>comments</a>
-                <h2>Tax Sliding</h2>
-                <div>Sunday, July 26, 2015</div>
-                <div><p>Today we&#39;re going to <del>complain</del> talk about taxes! Exciting, I know. So exciting
-<a href="http://deplicator.github.io/tax-slider/">I made a thing for it</a>.</p>
-<p><em>August 11, 2015 edit: Now with a graph!</em></p>
+                <h2>jQuery FileTree - An Old Plugin</h2>
+                <div>Satruday, November 29, 2014</div>
+                <div><p>I&#39;ve been on a project at school for some time, it&#39;s a lot of fun. I enjoy working with others for a
+change. The project uses jQuery and we had a need to view directories from the server. Originally I
+wrote a very messy class that got the job done, but then one day I stumbled on
+<a href="http://www.abeautifulsite.net/jquery-file-tree/">jQueryFileTree</a>.</p>
 <!-- more -->
-<hr>
-<p>I&#39;ve done my own taxes every year since 1998 except for 2010, it&#39;s fun to me. Follow the
-instructions line by line, plug in numbers, do calculations--it&#39;s like a program written by the IRS
-and I get to execute it. I understand most people don&#39;t like it. Taxes are complex and I&#39;m all for
-a comprehensive and simplified tax reform. Every year I learn nuances and find the rabbit hole
-continues to grow.</p>
-<p>As on older college student, I&#39;m around people who are new to income tax. They have two common misconceptions I try to explain.</p>
-<p>First, the percent you pay doesn&#39;t apply to all taxable income the same. If you make a few extra
-dollars and move into the 25% tax bracket, you don&#39;t pay 25% on all of it. This is a difficult
-concept to explain before 20 a year old loses interest--hence <a href="http://deplicator.github.io/tax-slider/">the program</a>.</p>
-<p>Second is the argument for a flat tax rate. I get it, the idea sounds fair--I&#39;m all for fair too,
-but what would that rate have to be? Someone has done their homework and figured it out (not me).
-I&#39;m not here to debate if it is good or bad, I only want to point out as you earn more you get to
-pay more in either scenario. You&#39;ll notice on the tax slider page there is an effective tax rate
-that will always grow as you pay more. As someone who&#39;s stayed in the lower end all his life, I&#39;m
-okay with paying more when I have more and keeping more when I have less.</p>
-<p>I found it interesting how the tax percentages did not scale evenly. For example you pay 10% on the first $9,225, and 35% on a measly $1,699 when you are nearly at half a million. Seems like this could be excluded all together, making 6 tax brackets instead of the 7.</p>
+<p>Over all it was much simpler than my implementation. The only thing I don&#39;t like about it is it
+passes raw html from the connector script. My implementation passed a json object. Still, didn&#39;t
+take much work to get everything changed over. Most importantly, jQueryFileTree&#39;s implementation
+looked prettier... a lot prettier.</p>
+<p><img src="http://deplicator.github.io/images/jquery-filetree-mine.png" alt="I blame Glyphicons." title="My lame file tree."></p>
+<p><img src="http://deplicator.github.io/images/jquery-filetree-theirs.png" alt="This also taught me about base64 encoding--very cool." title="jQueryFileTree&#39;s default."></p>
+<p style="clear: both;"></p>
+
+<p>If there is anything I&#39;ve learned about working with web interfaces, it&#39;s this: no one cares how
+efficient/useful/pretty/awesome your underlying scripts is, they only look at the surface. It&#39;s
+actually unfair the value placed on aesthetics. Cover some craptacular code with bootstrap, everyone
+think&#39;s it gold.</p>
+<p>Why am I even writing about this?</p>
+<p>For as much as I like jQueryFileTree, there were a couple of things it couldn&#39;t do. Now it can do
+those things, because open source!</p>
+<p>One part of our project didn&#39;t need files, only folders. The user selects a folder and magic happens
+no matter what is inside. I added a Boolean option called &#39;folderSelect&#39; to handle this behavior. By
+default it&#39;s false, but if set to true files are not displayed and when the user clicks a folder
+that directory path is passed to the callback.</p>
+<p>The other thing we needed was a way to exclude files by name or extension. The new option &#39;exclude&#39;
+is an array of strings. Any strings that match a folder or file name is given a hidden class. In
+contrast &#39;folderSelect&#39; does not return files at all, this will return the excluded names but not
+show them. I did this just in case we wanted to have an option to show hidden files. In addition to
+names, any string that starts with <code>*.</code> will exclude by file extension.</p>
+<p>jQueryFileTree with these new options can be found at this <a href="https://github.com/deplicator/jQueryFileTree">fork of the original</a>. The
+exclusion code gets complicated, no doubt there are ways to improve it (I&#39;m all ears if anyone has a
+suggestion).</p>
+<p>Maybe I&#39;ll change it up to pass json in the ajax call, and have a way for the user to change up the
+look. I think that would be better. I don&#39;t have a need for that right now though, so I won&#39;t be
+surprised if it doesn&#39;t happen.</p>
 </div>
             </article>
             <div id="disqus_thread"></div>
@@ -107,8 +121,8 @@ okay with paying more when I have more and keeping more when I have less.</p>
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES * * */
             var disqus_shortname = 'geekwagon';
-            var disqus_identifier = 'blog/tax-sliding';
-            var disqus_title = 'blog/tax-sliding';
+            var disqus_identifier = 'blog/jquery-filetree-an-old-plugin';
+            var disqus_title = 'blog/jquery-filetree-an-old-plugin';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
