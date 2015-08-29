@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>A Blog by James</title>
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/ionicons.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/main.css">
+    <script src="http://deplicator.github.io/scripts/analytics.js"></script>
+    <script src="http://deplicator.github.io/scripts/jquery-2.1.4.min.js"></script>
+    <script src="http://deplicator.github.io/scripts/jquery-jqcloud.js"></script>
+    <script src="http://deplicator.github.io/scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <ul class="nav navbar-nav navbar-toggle collapsed pull-right" aria-expanded="false">
+                    <li><a class="ion-link" href="http://geekwagon.net"></a><li>
+                </ul>
+                <h1><a href="http://deplicator.github.io">A Blog by James</a></h1>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav pull-right" id="contact">
+                    <li>
+                        <a class="ion-ios-email-outline" title="Email is one of the best ways to contact me." href="mailto:james@geekwagon.net"></a>
+                    </li>
+                    <li>
+                        <a class="ion-social-facebook-outline" href="https://www.facebook.com/deplicator"></a>
+                    </li>
+                    <li>
+                        <a
+                            class="ion-social-github-outline"
+                            title="I don't always put Facebook before GitHub, but when I do it's because they're in alphabetical order."
+                            href="https://github.com/deplicator">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ion-social-googleplus-outline" href="https://plus.google.com/100479632575151546186?rel=author"></a>
+                    </li>
+                    <li>
+                        <a class="ion-social-linkedin-outline" href="https://www.linkedin.com/in/pryorjames">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ion-link" href="http://geekwagon.net"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+            <article>
+                <a href="../../"><span class="glyphicon glyphicon-circle-arrow-left"></span>back</a>
+                <a href="#disqus_thread"><span class="glyphicon glyphicon-comment"></span>comments</a>
+                <h2>My First WildStar Addon - Kael&#x27;s Housing Tour</h2>
+                <div>Satruday, July 19, 2014</div>
+                <div><p><img src="http://deplicator.github.io/images/khtss.png" alt="Oh WildStar how fun you were; too bad things didn&#39;t work out..." title="Hard to see, but there is a handsome warrior with new PvP gear in this picture."></p>
+<p>The screen shows it&#39;s not much of an addon, but the person I made it for is ecstatic about it.</p>
+<p>This post isn&#39;t about how to use Kael&#39;s Housing Tour. I spent more time writing a readme than it
+will be cumulatively read by users. It&#39;s <a href="https://github.com/deplicator/HousingTour">available on the git repo</a>. After some tweaks I&#39;ll
+put it on Cursed Gaming too.</p>
+<p>EDIT: It&#39;s <a href="http://www.curse.com/ws-addons/wildstar/222538-kaels-housing-tour">on cursed now too</a>.</p>
+<!-- more -->
+<p>The look of this addon was made by Kaelish (that&#39;s who Kael is). If you are curious why it&#39;s her
+housing tour I suggest the aforementioned readme file. Obviously this will get better over time, for
+example I&#39;d like to grey out the Guide and Change Guide button if you haven&#39;t clicked join a tour..
+or not show them.</p>
+<p>Development wise, lua is kind of strange. I&#39;m not a huge fan of Houston, the official addon
+development tool. I only used it for making changes to the graphical form. All the lua editing was
+done in Notepad++. This was the first time I ever used git in Windows. I was told there was some
+pretty gui for it, but I found Git Bash and did what I usually do (except no copy and paste, lame).</p>
+<p>The API is lacking in official documentation. Most unofficial documentation is just lists of
+libraries and methods available. Most of my real insight was gained looking at other addons. There
+are some area&#39;s my code is very similar to others. At first I thought that was kind of wrong, but
+the right click menu code for every addon I saw was virtually identical. I cyclomatic complexity-ed
+mine up by changing the right click menu option based on if you are a tour guide or not. Also, if
+you click on yourself the text is different.</p>
+<p>The Visitor addon&#39;s function for searching random properties was decent, but I had to do some
+tweaking. The most notable (imo) improvement is I pass the unique properties searched to the form
+instead of searches done. Searches done will always increment until the user clicks stop. Unique
+Properties will eventually hit a cap, so the user can see they probably aren&#39;t going to find the
+property they&#39;re looking for. Future improvements a visual indicator that the search is still going,
+and I&#39;d like to add an auto stop after so many searches with no more unique properties found. The
+are really a ton of things I want to add... some are in that readme.</p>
+<p>This addon also marked the next iteration of my 10 minute hack experiment. I wrote a quick blurb in
+my notes for almost every day. I&#39;m happy to share it, but these <a href="http://geekwagon.net/projects/HousingTour/2014-06-26_notes.md">are just notes for myself</a>
+(nothing juicy). They&#39;re in markdown, but I only ever view them in a text editor so it might not be
+perfect markdown.</p>
+</div>
+            </article>
+            <div id="disqus_thread"></div>
+        </div>
+
+        <!-- Enlarged Image Modal -->
+        <div class="modal fade" id="large-image-modal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+            var disqus_shortname = 'geekwagon';
+            var disqus_identifier = 'blog/my-first-wildstar-addon-kael-s-housing-tour';
+            var disqus_title = 'blog/my-first-wildstar-addon-kael-s-housing-tour';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>
+            Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+        </noscript>
+        <script src="http://deplicator.github.io/scripts/main.js"></script>
+    </div>
+</body>
+</html>
