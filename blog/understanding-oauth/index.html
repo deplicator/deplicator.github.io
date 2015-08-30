@@ -64,9 +64,9 @@
                 <div><p><img src="http://deplicator.github.io/images/IMG_20150829_122938.jpg" alt="Totally took a picture of the screen with my phone--trendy." title="OAuth can be daunting"></p>
 <p>Playing with Github&#39;s API without authorization has a limit of 50 calls per hour. I hit this limit
 faster than expected. It is time to learn how <a href="https://en.wikipedia.org/wiki/OAuth">OAuth</a> works.</p>
-<p><a href="http://geekwagon.net/projects/github-oauth-demo/">Here is the demo I made to help me get it</a>. This is not the best demo, but it works. Anyone
-with more knowledge in this area please leave feedback in the comments. I&#39;m all for making this
-better.</p>
+<p><a href="http://geekwagon.net/projects/github-oauth-demo/">Here is the demo I made to help me get it</a>. This is not the best demo, but it works. <a href="https://gist.github.com/deplicator/b00cf1c5d61ab6b0a714">This
+is the demo&#39;s source</a>. Anyone with more knowledge in this area please leave feedback in the
+comments. I&#39;m all for making this better.</p>
 <h3 id="step-1-make-stuff-up">Step 1 - Make Stuff Up</h3>
 <p>For this demo I&#39;m using Github, but OAuth should be the same anywhere.</p>
 <!-- more -->
@@ -85,9 +85,13 @@ people fill in gaps too.</p>
 reproducible by someone else (or even you). The demo uses PHP, and to create the state sting I used
 this:</p>
 <p><code>$_SESSION[&quot;state&quot;] = hash(&quot;sha256&quot;, microtime(TRUE).rand().$_SERVER[&quot;REMOTE_ADDR&quot;]);</code></p>
-<p>This was lifted from an <a href="https://gist.github.com/aaronpk/3612742">old Gist by aaronpk</a> I found while searching for how to OAuth. I
-referred to this gist several times, but this is the only part left untouched because it works. Make
-note we&#39;ve stored this random number in a <a href="http://php.net/manual/en/session.examples.basic.php">PHP Session</a>.</p>
+<p>You can see it on line 184 in <a href="https://gist.github.com/deplicator/b00cf1c5d61ab6b0a714">the source</a>. I should point out here, the source is a single
+file so it&#39;s got HTML, PHP, and CSS all in one (no custom JavaScript needed, it&#39;s handled through
+Bootstrap and jQuery). It is a little messy. I hope to add a concise version later, but it&#39;s not
+necessary because there are free PHP OAuth libraries better than this.</p>
+<p>The random state string was lifted from an <a href="https://gist.github.com/aaronpk/3612742">old Gist by aaronpk</a> I found while searching for
+how to OAuth. I referred to this gist several times, but this is the only part left untouched
+because it works. Make note we&#39;ve stored this random number in a <a href="http://php.net/manual/en/session.examples.basic.php">PHP Session</a>.</p>
 <p>Now that we have a client ID and a state, we can move on to the next step.</p>
 <h3 id="step-2-build-an-authorization-url">Step 2 - Build an Authorization URL</h3>
 <p>There are a lot of ways to do this, but I chose to kludge it with some simple string concatenation.</p>

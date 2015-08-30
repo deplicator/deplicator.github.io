@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>A Blog by James</title>
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/ionicons.min.css">
+    <link rel="stylesheet" type="text/css" href="http://deplicator.github.io/styles/main.css">
+    <script src="http://deplicator.github.io/scripts/analytics.js"></script>
+    <script src="http://deplicator.github.io/scripts/jquery-2.1.4.min.js"></script>
+    <script src="http://deplicator.github.io/scripts/jquery-jqcloud.js"></script>
+    <script src="http://deplicator.github.io/scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <ul class="nav navbar-nav navbar-toggle collapsed pull-right" aria-expanded="false">
+                    <li><a class="ion-link" href="http://geekwagon.net"></a><li>
+                </ul>
+                <h1><a href="http://deplicator.github.io">A Blog by James</a></h1>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav pull-right" id="contact">
+                    <li>
+                        <a class="ion-ios-email-outline" title="Email is one of the best ways to contact me." href="mailto:james@geekwagon.net"></a>
+                    </li>
+                    <li>
+                        <a class="ion-social-facebook-outline" href="https://www.facebook.com/deplicator"></a>
+                    </li>
+                    <li>
+                        <a
+                            class="ion-social-github-outline"
+                            title="I don't always put Facebook before GitHub, but when I do it's because they're in alphabetical order."
+                            href="https://github.com/deplicator">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ion-social-googleplus-outline" href="https://plus.google.com/100479632575151546186?rel=author"></a>
+                    </li>
+                    <li>
+                        <a class="ion-social-linkedin-outline" href="https://www.linkedin.com/in/pryorjames">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ion-link" href="http://geekwagon.net"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+            <article>
+                <a href="../../"><span class="glyphicon glyphicon-circle-arrow-left"></span>back</a>
+                <a href="#disqus_thread"><span class="glyphicon glyphicon-comment"></span>comments</a>
+                <h2>Ultima VII Party Planner</h2>
+                <div>Satruday, January 25, 2014</div>
+                <div><p><img src="http://deplicator.github.io/images/u7pp.jpg" alt="The Exult form loved it." title="Menion makes out like a bandit."></p>
+<p>In an effort to learn more about <a href="http://backbonejs.org/">backbone.js</a> I made a web application that is easily
+considered beautifully useless (beauty in the eye of the beholder, useless in the eye of everyone
+else). Really, this is probably one of the finest work of code writing I&#39;ve accomplished to date and
+there are maybe ten people in the world who will use it.</p>
+<p>There is plenty of room for improvements, but I&#39;d like to write about it anyway.</p>
+<p>The picture is an example of a typical, eight character, all level six party. You have a list of all
+trainers to go visit, who to train when you get there, and about where they are on the map. It also
+shows how much gold to take to each trainer, and the total cost of all training.</p>
+<p>Link: <a href="http://geekwagon.net/projects/u7pp/">geekwagon.net/projects/u7pp</a></p>
+<p>Source: <a href="https://github.com/deplicator/U7PartyPlanner">github.com/deplicator/U7PartyPlanner</a></p>
+<!-- more -->
+<p>What I thought was going to be a simple little training app for an old rpg turned out to be not so
+simple. I had the basics working, a model that represents a party member with attributes that can be
+changed. Some attributes are linked, like hit points are always equal to strength. That was easy
+enough. I made a simple function where you could throw in a trainer name and it will update the
+party member model to reflect training with them in the game (add to stats, subtract from training
+points). It was even easy to undo (subtract from stats, add to training points).</p>
+<p>The wrench was the rubberband effect. Ultima VII has the three primary stats: Strength, Dexterity,
+and Intelligence. And two secondary stats: Combat and Magic. Dexterity is linked to Combat and
+Intelligence is linked to Magic. If you train Dexterity and increase it by 1, your combat increases
+by 1 as well. If you train to increase Combat by 1, it goes up by 1 unless you have a lot of
+Dexterity. Then it will go up by about half the difference of a characters Dexterity and Combat.</p>
+<p>For example: Spark starts with 22 Dexterity and 10 Combat. If he trains with Sentri, who gives a
+single Dexterity, he&#39;ll have 23 Dexterity and 11 Combat. On the other hand if he trains with Markus,
+who gives a single Combat, he&#39;ll have 22 Dexterity and 16 combat.</p>
+<p>This wasn&#39;t a huge problem until I realized undoing character training was impossible without
+knowing the order they trained in. When I first started to think about the problem I thought it was
+going to be hard to implement a fix. I opted to make a statHistory object in the party member model.
+Key 0 is the original stats, key 1 is the first trainer increase, and so on. I thought about making
+statHistory a regular backbone model but didn&#39;t.</p>
+<p>This is also the first time I&#39;ve tried to use right click in an app. I was befuddled at first
+because everything I read said to just take the button event from the mouse click. That&#39;s true, but
+what eluded me is to use mousedown instead of click. Also:</p>
+<p><code>document.oncontextmenu = function() { return false; };</code></p>
+<p>That bit removes the normal browser right click menu. I didn&#39;t look into it, but as I write this I
+think it would be nice if I could only turn off the normal right click menu over specific page
+elements and leave it in place everywhere else.</p>
+<p>Everything up to that point was easy to do, just took time to implement and test. The training
+checklist took some serious trial and error. I don&#39;t think the current solution is very clever, but
+it&#39;s the only one I&#39;ve gotten to work reliably. There is a method in the Party collection that loops
+through every party member and makes a list of unique trainers. That sounds good, but the method
+runs every time any model in the collection changes. At first I tries to make the checklist by
+comparing who was just clicked to the list, but that turned out to be a can of worm--especially with
+untraining.</p>
+<p>I thought the map was going to be harder than it was, backbone made working with the canvas easier
+than the old fashion way. It made me appreciate the <code>render()</code> method.</p>
+<p><em>I&#39;m still working on this project from time to time, and I don&#39;t think this post will be spared
+from editing either.</em></p>
+</div>
+            </article>
+            <div id="disqus_thread"></div>
+        </div>
+
+        <!-- Enlarged Image Modal -->
+        <div class="modal fade" id="large-image-modal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+            var disqus_shortname = 'geekwagon';
+            var disqus_identifier = 'blog/ultima-vii-party-planner';
+            var disqus_title = 'blog/ultima-vii-party-planner';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>
+            Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+        </noscript>
+        <script src="http://deplicator.github.io/scripts/main.js"></script>
+    </div>
+</body>
+</html>
