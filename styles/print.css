@@ -1,8 +1,5 @@
-
-@import url(fonts.css);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,600);
 @media print {
-    /* parsed from md, have to get creative with the css */
+
     * {
         margin: 0;
         padding: 0;
@@ -17,14 +14,15 @@
         height: 11in;
         padding: 0.25in;
     }
+
     h1, h2, h3 {
-        color: #3950C3;
+        color: black;
         font-family: 'LinBiolinum';
         margin: 0;
     }
 
     h1 {
-        padding: 0;
+        padding: 0 0 10px 0;
         font-weight: 400;
         font-size: 38px;
     }
@@ -37,7 +35,7 @@
     h3 {
         font-size: 20px;
         border-top: 1px solid #D0DAE0;
-        margin: 26px 0 0 0;
+        margin: 29px 0 0 0;
         width: 90%;
     }
 
@@ -69,7 +67,7 @@
     }
 
     p {
-        font-size: 14px;
+        font-size: 16px;
         margin: 6px 0 0 0;
     }
 
@@ -82,45 +80,38 @@
         color: #3E3E3E;
     }
 
-    pre {
-        display: none!important;
+    li > ul {
+        font-size: 14px;
+        padding: 0 0 0 14px;
     }
 
-    #james-pryor,
-    #james-pryor + p,
-    #achievements,
-    #achievements + ul {
-        clear: left;
+    #james-pryor + ul {
         float: left;
-        width: 49%;
+        margin: 0 0 0 12px;
+        width: 40%;
     }
 
-    #james-pryor + p,
-    #contact + p {
-        min-height: 50px;
-        font-size: 16px;
+    #james-pryor + ul + ul {
+        float: left;
+        margin: -42px 0 0 80px;
+        border: 1px solid #D0DAE0;
+        padding: 6px 10px;
+        border-radius: 9px;
     }
 
-    #contact + p > strong {
-        font-weight: 600;
-    }
-
-    #experience-and-skills + ul + p {
+    #history {
         clear: both;
-        font-family: 'LinuxLibertine';
-        margin: 0 auto;
-        text-align: center;
-        width: 74%;
-    }
+        margin: 98px 0 -16px 0;
 
-    #notable-history {
-        margin: 20px 0 -20px 0;
-        text-align: center;
     }
 
     ul {
         list-style-type: none;
         margin: 0;
         padding: 0;
+    }
+
+    .no-print {
+        display: none;
     }
 }
